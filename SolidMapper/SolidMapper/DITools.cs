@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace StableMapper
+namespace SolidMapper
 {
     public static class IServiceCollectionExtensions
     {
@@ -16,7 +16,7 @@ namespace StableMapper
 
         public static void AddStableMapper(this IServiceCollection services, Assembly[] assemblies)
         {
-            var mappers = assemblies.SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Any(i => i.Namespace == "StableMapper"))).ToList();
+            var mappers = assemblies.SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Any(i => i.Namespace == "SolidMapper"))).ToList();
 
             foreach (var mapper in mappers)
             {

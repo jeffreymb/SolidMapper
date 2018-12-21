@@ -1,4 +1,4 @@
-﻿namespace StableMapper
+﻿namespace SolidMapper
 {
     public interface IMapper<TDTO, TEntity>
     {
