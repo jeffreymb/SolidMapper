@@ -9,12 +9,12 @@ namespace SolidMapper
 {
     public static class IServiceCollectionExtensions
     {
-        public static void AddStableMapper(this IServiceCollection services, Assembly assembly)
+        public static void AddSolidMapper(this IServiceCollection services, Assembly assembly)
         {
-            AddStableMapper(services, new Assembly[] { assembly });
+            AddSolidMapper(services, new Assembly[] { assembly });
         }
 
-        public static void AddStableMapper(this IServiceCollection services, Assembly[] assemblies)
+        public static void AddSolidMapper(this IServiceCollection services, Assembly[] assemblies)
         {
             var mappers = assemblies.SelectMany(a => a.GetTypes().Where(t => t.GetInterfaces().Any(i => i.Namespace == "SolidMapper"))).ToList();
 
