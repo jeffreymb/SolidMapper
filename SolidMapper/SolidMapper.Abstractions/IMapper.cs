@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SolidMapper.Abstractions
@@ -7,15 +6,9 @@ namespace SolidMapper.Abstractions
     public interface IMapper
     {
         Task<TDest> MapAsync<TSource, TDest>(TSource source, TDest dest);
-        Task<TDest> MapAsync<TBaseSource, TBaseDest, TDest>(TBaseSource source, TBaseDest dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IEnumerable<TSource> source, IList<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IList<TSource> source, IList<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IEnumerable<TSource> source, List<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IList<TSource> source, List<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(TSource[] source, List<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(TSource[] source, IList<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IOrderedEnumerable<TSource> source, IList<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(IOrderedEnumerable<TSource> source, List<TDest> dest);
-        Task<IList<TDest>> MapAsync<TSource, TDest>(List<TSource> source, IList<TDest> dest);
+
+        // Add a separate method for mapping multiple items, per Eric Lippert's comment on
+        // https://stackoverflow.com/questions/8727523/generic-not-constraint-where-t-ienumerable
+        Task<IEnumerable<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source, IEnumerable<TDest> dest);
     }
 }
