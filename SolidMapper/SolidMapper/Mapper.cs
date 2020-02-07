@@ -1,4 +1,5 @@
-﻿using SolidMapper.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SolidMapper.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace SolidMapper
 
         public Task<TDest> MapAsync<TSource, TDest>(TSource source, TDest dest)
         {
+            var profile = _serviceProvider.GetRequiredService<IMappingProfile<TSource, TDest>>();
+            profile.Mapper = this;
+
             throw new NotImplementedException();
         }
 
