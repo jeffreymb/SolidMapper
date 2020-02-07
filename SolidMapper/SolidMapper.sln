@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidMapper.Abstractions.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolidMapper", "SolidMapper\SolidMapper.csproj", "{A7A3804D-3D13-4302-87C7-FBC2E2DEBB2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidMapper.Tests", "SolidMapper.Tests\SolidMapper.Tests.csproj", "{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{A7A3804D-3D13-4302-87C7-FBC2E2DEBB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7A3804D-3D13-4302-87C7-FBC2E2DEBB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7A3804D-3D13-4302-87C7-FBC2E2DEBB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{F35C267F-5B1B-4413-90C2-234F9D522C4F} = {13F9BEE3-0B98-4AE5-83A5-989616BCB528}
 		{9BB6ADE5-D7EF-4090-9BEF-C93D7DBFF9E1} = {EC5DC5B1-8EC0-4D33-876C-29FBFF71C4A0}
 		{A7A3804D-3D13-4302-87C7-FBC2E2DEBB2B} = {13F9BEE3-0B98-4AE5-83A5-989616BCB528}
+		{1F522B28-5AA9-4CCB-9FD3-DD6979CDD7B1} = {EC5DC5B1-8EC0-4D33-876C-29FBFF71C4A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CB3A2C6-9360-45B5-BCCC-5135C548027E}
