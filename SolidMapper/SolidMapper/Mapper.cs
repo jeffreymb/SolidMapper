@@ -7,10 +7,12 @@ namespace SolidMapper
 {
     public sealed class Mapper : IMapper
     {
+        private readonly IDictionary<(Type SourceType, Type DestinationType, object Key), object> _cache;
         private readonly IServiceProvider _serviceProvider;
 
         public Mapper(IServiceProvider serviceProvider)
         {
+            _cache = new Dictionary<(Type, Type, object), object>();
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
@@ -28,19 +30,31 @@ namespace SolidMapper
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source, IEnumerable<TDest> dest)
+        public async Task<IList<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source)
         {
             var profile = GetMappingProfile<TSource, TDest>();
             var destList = new List<TDest>();
 
             foreach (var item in source)
             {
-                var mappedItem = await profile.MapAsync(item, profile.ItemConstructor());
+                TDest mappedItem;
+                var cacheKey = (typeof(TSource), typeof(TDest), profile.CacheKey(item));
+
+                if (_cache.ContainsKey(cacheKey))
+                {
+                    mappedItem = (TDest)_cache[cacheKey];
+                }
+
+                else
+                {
+                    mappedItem = await profile.MapAsync(item, profile.ItemConstructor());
+                    _cache[cacheKey] = mappedItem;
+                }
+
                 destList.Add(mappedItem);
             }
 
-            dest = destList;
-            return dest;
+            return destList;
         }
     }
 }

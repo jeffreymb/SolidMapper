@@ -12,10 +12,9 @@ namespace SolidMapper.Abstractions.Tests
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source,
-                                                                      IEnumerable<TDest> dest)
+        public Task<IList<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source)
         {
-            return Task.FromResult(new List<TDest>() as IEnumerable<TDest>);
+            return Task.FromResult(new List<TDest>() as IList<TDest>);
         }
     }
 }

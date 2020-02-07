@@ -5,6 +5,7 @@ namespace SolidMapper
 {
     public interface IMappingProfile<TSource, TDest>
     {
+        Func<TSource, object> CacheKey { get; }
         Func<TDest> ItemConstructor { get; }
         IMapper Mapper { get; set; }
 
