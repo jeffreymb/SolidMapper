@@ -9,6 +9,14 @@ namespace SolidMapper.Abstractions.Tests
         private MockMapper Mapper => new MockMapper();
 
         [Fact]
+        public void CanCallWithArrayTypes()
+        {
+            var source = new int[0];
+            var dest = new string[0];
+            Mapper.MapRangeAsync(source, dest);
+        }
+
+        [Fact]
         public void CanCallWithEnumerableTypes()
         {
             IEnumerable<int> source = new List<int>();
