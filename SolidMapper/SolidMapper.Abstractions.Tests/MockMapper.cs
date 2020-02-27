@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SolidMapper.Abstractions.Tests
 {
     public sealed class MockMapper : IMapper
     {
-        public Task<TDest> MapAsync<TSource, TDest>(TSource source,
-                                                    TDest dest)
+        public TDest Map<TSource, TDest>(TSource source,
+                                         TDest dest,
+                                         IMappingTree tree = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IList<TDest>> MapRangeAsync<TSource, TDest>(IEnumerable<TSource> source)
+        public IList<TDest> MapRange<TSource, TDest>(IEnumerable<TSource> source,
+                                                     IMappingTree tree = null)
         {
-            return Task.FromResult(new List<TDest>() as IList<TDest>);
+            return new List<TDest>() as IList<TDest>;
         }
     }
 }

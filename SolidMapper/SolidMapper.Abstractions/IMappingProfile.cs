@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace SolidMapper
 {
@@ -7,8 +6,7 @@ namespace SolidMapper
     {
         Func<TSource, object> CacheKey { get; }
         Func<TDest> ItemConstructor { get; }
-        IMapper Mapper { get; set; }
 
-        Task<TDest> MapAsync(TSource source, TDest dest);
+        TDest Map(TSource source, TDest dest, IMappingContext context);
     }
 }

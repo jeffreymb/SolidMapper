@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SolidMapper.Conditions;
 using SolidMapper.ConsoleApp.Models;
 using SolidMapper.ConsoleApp.Profiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SolidMapper.ConsoleApp
 {
@@ -15,14 +15,44 @@ namespace SolidMapper.ConsoleApp
         {
             var serviceProvider = new ServiceCollection()
                 .AddScoped<IMappingProfile<HexColor, RGBColor>, HexToRGBProfile>()
+                .AddScoped<IMappingProfile<DataList, ViewList>, DataListToViewListProfile>()
+                .AddScoped<IMappingProfile<DataListItem, ViewListItem>, DataListItemToViewListItemProfile>()
                 .BuildServiceProvider();
-            return new Mapper(serviceProvider);
+            return new Mapper(new IMappingCondition[] { new RecursionCondition() }, serviceProvider);
         }
 
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            TestAutoMapper();
-            await TestSolidMapper();
+            //TestAutoMapper();
+            //TestSolidMapper();    // Faster AND uses a lot less memory! 🎉
+
+            var source = new List<DataList>();
+
+            for (var i = 0; i < 100_000; i++)
+            {
+                var list = new DataList
+                {
+                    Id = Guid.NewGuid(),
+                    Items = new List<DataListItem>(),
+                    Name = "Groceries"
+                };
+
+                for (var j = 0; j < 500; j++)
+                {
+                    var item = new DataListItem
+                    {
+                        List = list,
+                        Name = "Milk"
+                    };
+                    list.Items.Add(item);
+                }
+
+                source.Add(list);
+            }
+
+            TestAutoMapperLists(source);
+            TestSolidMapperLists(source);
+
             Console.ReadKey();
         }
 
@@ -55,7 +85,7 @@ namespace SolidMapper.ConsoleApp
             Console.WriteLine($"Auto-mapped {dest.Count} objects in {stopwatch.Elapsed}.");
         }
 
-        private static async Task TestSolidMapper()
+        private static void TestSolidMapper()
         {
             var mapper = GetMapper();
             var indices = Enumerable.Range(0, 1_000_000).ToArray();
@@ -73,7 +103,37 @@ namespace SolidMapper.ConsoleApp
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var dest = await mapper.MapRangeAsync<HexColor, RGBColor>(source);
+            var dest = mapper.MapRange<HexColor, RGBColor>(source);
+
+            stopwatch.Stop();
+            Console.WriteLine($"Solid-mapped {dest.Count} objects in {stopwatch.Elapsed}.");
+        }
+
+        private static void TestAutoMapperLists(IList<DataList> source)
+        {
+            var mapperConfig = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new DataListToViewListAutoProfile());
+                cfg.AddProfile(new DataListItemToViewListItemAutoProfile());
+            });
+            var mapper = mapperConfig.CreateMapper();
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var dest = mapper.Map(source, new List<DataList>());
+
+            stopwatch.Stop();
+            Console.WriteLine($"Auto-mapped {dest.Count} objects in {stopwatch.Elapsed}.");
+        }
+
+        private static void TestSolidMapperLists(IList<DataList> source)
+        {
+            var mapper = GetMapper();
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var dest = mapper.MapRange<DataList, ViewList>(source);
 
             stopwatch.Stop();
             Console.WriteLine($"Solid-mapped {dest.Count} objects in {stopwatch.Elapsed}.");

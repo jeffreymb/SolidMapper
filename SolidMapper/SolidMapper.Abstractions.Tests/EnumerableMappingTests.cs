@@ -12,30 +12,26 @@ namespace SolidMapper.Abstractions.Tests
         public void CanCallWithArrayTypes()
         {
             var source = new int[0];
-            var dest = new string[0];
-            Mapper.MapRangeAsync(source, dest);
+            Mapper.MapRange<int, string>(source);
         }
 
         [Fact]
         public void CanCallWithEnumerableTypes()
         {
             IEnumerable<int> source = new List<int>();
-            IEnumerable<string> dest = new List<string>();
-            Mapper.MapRangeAsync(source, dest);
+            Mapper.MapRange<int, string>(source);
 
             var orderedSource = new List<int>().OrderBy(x => x);
-            var orderedDest = new List<string>().OrderBy(x => x);
-            Mapper.MapRangeAsync(source, dest);
+            Mapper.MapRange<int, string>(source);
         }
 
         [Fact]
         public void CanCallWithListTypes()
         {
-            Mapper.MapRangeAsync(new List<int>(), new List<string>());
+            Mapper.MapRange<int, string>(new List<int>());
 
             IList<int> source = new List<int>();
-            IList<string> dest = new List<string>();
-            Mapper.MapRangeAsync(source, dest);
+            Mapper.MapRange<int, string>(source);
         }
     }
 }
